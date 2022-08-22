@@ -1,0 +1,9 @@
+# NOTE: https://shohheyhey.com/docker-redis-sidekiq/
+
+:verbose: false
+:pidfile: ./tmp/pids/sidekiq.pid
+:logfile: ./log/sidekiq.log
+:concurrency: 10
+:queues:
+  - default
+  - test

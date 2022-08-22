@@ -1,0 +1,15 @@
+# NOTE: https://shohheyhey.com/docker-redis-sidekiq/
+
+default: &default
+  db:
+    sidekiq: 0
+    # cache:   1
+    # session: 2
+
+development:
+  <<: *default
+  host: redis
+
+test:
+  <<: *default
+  host: redis

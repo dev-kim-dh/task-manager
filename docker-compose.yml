@@ -1,0 +1,31 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./tmp/db:/var/lib/mysql
+
+  redis:
+    image: redis:6.0.9
+    env_file: .env
+    command: redis-server --appendonly yes
+    ports:
+      - 6379:6379
+
+  web:
+    build: .
+    command: /bin/bash
+    tty: true
+    volumes:
+      - .:/myapp
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis
+      
