@@ -1,24 +1,19 @@
-# README
+## Command
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+#### crontab 최신화 커맨드
 
-Things you may want to cover:
+```sh
+$ whenever --update-crontab
+```
 
-* Ruby version
+#### DB migration실행
 
-* System dependencies
+```sh
+$ bundle exec rake ridgepole:apply
+```
 
-* Configuration
+#### Sidekiq실행
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```sh
+$ bundle exec sidekiq -C config/sidekiq.yml
+```
