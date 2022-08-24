@@ -20,6 +20,7 @@ services:
   web:
     build: .
     command: /bin/bash
+    env_file: .env
     tty: true
     volumes:
       - .:/myapp

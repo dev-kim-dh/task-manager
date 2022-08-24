@@ -1,9 +1,6 @@
 # NOTE: https://shohheyhey.com/docker-redis-sidekiq/
-
+# bundle exec sidekiq -C config/sidekiq.yml
 redis_config = YAML.load_file('config/redis.yml')[ENV['RAILS_ENV']]
-p "@@@@@@@@@@@@@@@@@@@@@"
-p ENV['RAILS_ENV']
-p "@@@@@@@@@@@@@@@@@@@@@"
 redis_config['db'] = redis_config['db']['sidekiq']
 
 Sidekiq.configure_server do |config|

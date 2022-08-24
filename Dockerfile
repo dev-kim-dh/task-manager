@@ -14,6 +14,14 @@ COPY Gemfile.lock /myapp/Gemfile.lock
 RUN bundle install
 COPY . /myapp
 
+ARG RAILS_ENV=development
+ENV RAILS_ENV $RAILS_ENV
+
+# crontab관련
+RUN apt-get update && apt-get install -y vim
+RUN apt-get update && apt-get install -y cron
+RUN touch /var/spool/cron/crontabs/root
+
 RUN yarn install --check-files
 RUN bundle exec rails webpacker:compile
 
