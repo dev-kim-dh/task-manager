@@ -26,7 +26,6 @@ rails_env = ENV['RAILS_ENV'] ||= 'development'
 set :output, error: 'log/crontab_error.log', standard: 'log/crontab.log'
 set :environment, rails_env
 
-# NOTE: 터미널에서 whenever --update-crontab으로 최신 반영
 every 5.minutes do
   runner "SyncGithubBatch.run"
 end
