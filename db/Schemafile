@@ -18,6 +18,23 @@ create_table "github_repositories", charset: "utf8mb4", force: :cascade do |t|
   t.index ["owner_id"], name: "index_github_repositories_on_owner_id"
 end
 
+create_table "github_pull_requests", charset: "utf8mb4", force: :cascade do |t|
+  t.string "title", null: false
+  t.string "state", null: false
+  t.integer "remote_id", null: false
+  t.bigint "owner_id", null: false
+  t.string "body"
+  t.string "merge_commit_sha"
+  t.datetime "remote_created_at", null: false
+  t.datetime "remote_updated_at"
+  t.datetime "remote_closed_at"
+  t.datetime "remote_merge_at"
+  t.datetime "created_at", null: false
+  t.datetime "updated_at"
+  t.datetime "deleted_at"
+  t.index ["owner_id"], name: "index_github_repositories_on_owner_id"
+end
+
 create_table "github_users", charset: "utf8mb4", force: :cascade do |t|
   t.integer "remote_id", null: false
   t.bigint "user_id", null: false
@@ -42,5 +59,6 @@ create_table "users", charset: "utf8mb4", force: :cascade do |t|
 end
 
 add_foreign_key "github_repositories", "github_users", column: "owner_id"
+add_foreign_key "github_pull_requests", "github_users", column: "owner_id"
 add_foreign_key "github_users", "users"
 
