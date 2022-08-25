@@ -1,7 +1,7 @@
 module Github
   class Client
     # TODO: move to ".env"
-    GITHUB_API_BASE_URL = "https://api.github.com"
+    GITHUB_API_BASE_URL = ENV["GITHUB_API_BASE_URL"]
     TIME_OUT_SEC = 5
 
     class << self

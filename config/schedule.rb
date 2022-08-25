@@ -23,9 +23,9 @@
 ENV.each { |k, v| env(k, v) }
 
 rails_env = ENV['RAILS_ENV'] ||= 'development'
-set :output, error: 'log/crontab_error.log', standard: 'log/crontab.log'
+set :output, "log/crontab.log"
 set :environment, rails_env
 
-every 5.minutes do
+every 10.minutes do
   runner "SyncGithubBatch.run"
 end
