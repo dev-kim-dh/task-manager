@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Github Sync Batch
 class SyncGithubBatch
   class << self
     def run
@@ -15,11 +18,11 @@ class SyncGithubBatch
 
   private
 
-  def sync_github_repository(github_user, github_client)
+  def sync_github_repository(github_user, _github_client)
     Github::SyncRepositoryJob.perform_later(github_user)
   end
 
-  def sync_github_organization_repo(github_user, github_client)
+  def sync_github_organization_repo(github_user, _github_client)
     Github::SyncOrganizationRepoJob.perform_now(github_user)
   end
 
