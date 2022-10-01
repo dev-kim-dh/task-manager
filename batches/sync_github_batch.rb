@@ -22,9 +22,9 @@ class SyncGithubBatch
     Github::SyncRepositoryJob.perform_later(github_user)
   end
 
-  def sync_github_organization_repo(github_user, _github_client)
-    Github::SyncOrganizationRepoJob.perform_now(github_user)
-  end
+  # def sync_github_organization_repo(github_user, _github_client)
+  #   Github::SyncOrganizationRepoJob.perform_now(github_user)
+  # end
 
   def init_client(github_user_token)
     ::Github::Client.new(github_user_token)

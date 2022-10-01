@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SyncOrganizationRepoJob < BaseJob
   queue_as :default
 
