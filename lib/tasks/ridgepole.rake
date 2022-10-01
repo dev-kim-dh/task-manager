@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 # NOTE: command
 #       bundle exec rake ridgepole:apply
 
 namespace :ridgepole do
   desc "Apply ridgepole schemafile"
   task apply: :environment do
-    ridgepole('--apply')
+    ridgepole("--apply")
   end
 
   private
@@ -14,7 +16,7 @@ namespace :ridgepole do
   end
 
   def ridgepole(*options)
-    command = ['bundle exec ridgepole --file ./db/Schemafile', "-c #{config_file}", "-E #{Rails.env}"]
-    system (command + options).join(' ')
+    command = ["bundle exec ridgepole --file ./db/Schemafile", "-c #{config_file}", "-E #{Rails.env}"]
+    system (command + options).join(" ")
   end
 end

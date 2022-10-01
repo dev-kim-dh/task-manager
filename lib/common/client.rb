@@ -1,30 +1,23 @@
 # frozen_string_literal: true
 
-module Github
-  # Github Api Client
+module Common
+  # Common Api Client
   class Client
-    GITHUB_API_BASE_URL = ENV.fetch("GITHUB_API_BASE_URL", nil)
     TIME_OUT_SEC = 5
 
     class << self
       def init_client
         new
       end
-
-      def get_auth_client(auth_token)
-        new(auth_token)
-      end
     end
 
-    def initialize(auth_token = {})
-      @auth_token = auth_token
+    def initialize
       @client = HTTPClient.new
       configure_client
     end
 
     # NOTE: path = "/{path}"
-    def get(path, query_params = {}, header: default_header)
-      url = GITHUB_API_BASE_URL + path
+    def get(url, query_params = {}, header: default_header)
       res = client.get(url, query: query_params, header: header)
 
       JSON.parse(res.body, symbolize_names: true)
