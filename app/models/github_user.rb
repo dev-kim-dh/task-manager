@@ -1,4 +1,10 @@
-class GithubUser < ActiveRecord::Base
+# frozen_string_literal: true
+
+class GithubUser < ApplicationRecord
+  REMOTE_KEY_TRANSFORM_MAP = {
+    id: :remote_id
+  }.freeze
+
   belongs_to :user
 
   has_many :github_repositories, foreign_key: :owner_id
@@ -6,10 +12,14 @@ class GithubUser < ActiveRecord::Base
 
   validates :remote_id, presence: true,
                         uniqueness: true
-  validates :github_name, presence: true
-  validates :github_email, presence: true,
-                            uniqueness: true
-  validates :avatar_url, presence: true
-  validates :profile_url, presence: true
-  validates :auth_token, presence: true
+  validates :user_id, presence: true,
+                      uniqueness: true
+  validates :login, presence: true,
+                      uniqueness: true
+
+  scope :find_with_remote_id, lambda { |remote_id|
+    provider_table = "#{provider}_user".to_sym
+    joins(:user).find_by(remote_id: remote_id)
+    
+  }
 end
