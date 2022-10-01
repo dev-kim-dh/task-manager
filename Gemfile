@@ -58,6 +58,10 @@ group :development do
   gem "spring"
 end
 
+gem "omniauth", "~> 1.9.1"
+gem "omniauth-github", "~> 1.4.0"
+gem "omniauth-rails_csrf_protection", "~> 0.1.2"
+
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem "capybara", ">= 3.26"
