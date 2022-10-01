@@ -1,4 +1,6 @@
-class UsersController < ActionController::Base
+# frozen_string_literal: true
+
+class UsersController < ApplicationController
   include UserAuthentication
 
   def new
