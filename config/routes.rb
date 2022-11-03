@@ -6,8 +6,9 @@ Rails.application.routes.draw do
 
   root to: "dashboards#home"
   get "/auth/:provider/callback", to: "session#create"
+  get "/login", to: "session#login"
 
-  resources :users, only: [:new]
+  resources :users, only: [:new, :create]
 
   resources :dashboards, only: [:index]
 

@@ -7,20 +7,16 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def login
-    @user = User.find_by!(mail: login_params[:mail])
-    if @user.authenticate(login_params[:password])
-      set_cookie_to_login_user
-      redirect_to dashboards_url and return
-    else
-      flash[:danger] = "로그인 정보를 확인해주세요."
-      redirect_to root_url
-    end
+  def create
+    @user = User.create!(params.require(:user).permit(%i[name]))
+    set_cookie_to_login_user
+
+    redirect_to root_url and return
   end
 
   private
 
-  def login_params
-    params.require(:user).permit(%i[mail password])
+  def user_params
+    params.require(:user).permit(%i[name])
   end
 end

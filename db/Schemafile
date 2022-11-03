@@ -49,8 +49,6 @@ end
 
 create_table "users", charset: "utf8mb4", force: :cascade do |t|
   t.string "name", null: false, comment: "유저명"
-  # t.string "mail_address", null: false, comment: "메일 주소"
-  # t.string "password_digest", null: false, comment: "패스워드"
   t.string "remember_token", comment: "유저 토큰"
   t.datetime "created_at", null: false
   t.datetime "updated_at"

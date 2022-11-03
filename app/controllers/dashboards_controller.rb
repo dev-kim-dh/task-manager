@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
 class DashboardsController < ApplicationController
-  def home;end
+  include UserAuthentication
+
+  def home
+    redirect_to :login unless authenticate
+  end
 end
