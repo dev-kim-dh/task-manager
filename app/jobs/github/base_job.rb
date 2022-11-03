@@ -1,10 +1,15 @@
+# frozen_string_literal: true
+
 module Github
   class BaseJob < ApplicationJob
-
     private
 
     def client
-      @client ||= ::Github::Client.get_client
+      @client ||= ::Common::Client.init_client
+    end
+
+    def github_client
+      @github_client ||= ::Github::Client.init_client
     end
 
     def auth_client(token)

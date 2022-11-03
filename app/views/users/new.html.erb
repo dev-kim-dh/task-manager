@@ -1,8 +1,7 @@
 <%= render "shared/flash_message" %>
 <div>
-  <%= form_for @user, url: login_path do |f| %>
-    <%= f.text_field :mail %>
-    <%= f.password_field :password %>
-    <%= f.button :login, type: :submit %>
+  <%= form_for @user, url: users_url do |f| %>
+    <%= f.text_field :name %>
+    <%= f.button :create_account, type: :submit %>
   <% end %>
 </div>

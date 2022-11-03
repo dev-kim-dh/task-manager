@@ -1,13 +1,16 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  require 'sidekiq/web'
+  require "sidekiq/web"
   mount Sidekiq::Web, at: "/sidekiq"
 
-  root to: "users#new"
-  post "/login", to: "users#login"
-  resources :users, only: [:new]
-  
+  root to: "dashboards#home"
+  get "/auth/:provider/callback", to: "session#create"
+  get "/login", to: "session#login"
+
+  resources :users, only: [:new, :create]
+
   resources :dashboards, only: [:index]
-  
 
   namespace :api do
     namespace :v1 do

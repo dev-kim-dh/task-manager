@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Github
   class SyncPullRequestJob < BaseJob
     queue_as :default
@@ -8,59 +10,46 @@ module Github
     #       이 맵을 기준으로하여 키를 변경한다.
     #       key from github api => db column name
     REMOTE_TO_DB_ATTR_KEY_MAP = {
-      :id => :remote_id
-    }
+      id: :remote_id
+    }.freeze
+
+    SYNC_COLUMN = %i[id title state body merge_commit_sha remote_created_at remote_updated_at remote_closed_at remote_merge_at].freeze
 
     def perform
-      repos = fetch_repositories(github_user)
-      repos.each do |repo|
-        initialized_repo = if GithubRepository.find_by(remote_id: repo[:id])
-                            update_github_repo(repo)
-                          else
-                            create_github_repo(repo)
-                          end
-        next unless repo_owner_exists?(repo.dig(:owner, :id))
-
-        repo_owner = GithubUser.find_by(remote_id: repo.dig(:owner, :id))
-        next unless repo_owner
-
-        initialized_repo.owner_id = repo_owner.id
-        initialized_repo.save
+      target_repositories.each do |repo|
+        pull_requests = client.get("#{repo.url}/pulls")
+        build_pull_requests(pull_requests)
       end
     end
 
     private
 
-    def fetch_repositories(github_user)
-      client.get("/users/#{github_user.github_name}/repos")
+    def target_repositories
+      @target_repositories ||= GithubRepository.active
     end
 
-    def create_github_repo(repo)
-      GithubRepository.new(
-        sync_repo_keys_with_app(repo)
-      )
+    def build_pull_requests(pull_requests)
+      built_pull_requests = pull_requests.flat_map do |pull_request|
+        pr_owner = GithubUser.find_by(remote_id: pull_request.dig(:user, :id))
+        next unless pr_owner
+
+        pr_info = slice_and_transform_remote_keys(pull_request)
+        pr_owner.github_pull_requests.build(pr_info)
+      end
+
+      GithubPullRequest.import built_pull_requests
     end
 
-    def update_github_repo(repo)
-      repo_in_app = GithubRepository.find_by(remote_id: repo[:id])
-      return if repo_in_app.nil?
-
-      repo_in_app.assign_attributes(
-        sync_repo_keys_with_app(repo)
-      )
-      repo_in_app
+    def pr_owner_exists?(owner_id)
+      GithubUser.find_by(remote_id: owner_id)
     end
 
-    def sync_repo_keys_with_app(repo)
-      repo.slice(:id, :name, :url).transform_keys do |key|
+    def transform_remote_keys(pull_request)
+      pull_request.slice(SYNC_COLUMN).transform_keys do |key|
         next key unless REMOTE_TO_DB_ATTR_KEY_MAP[key]
 
         REMOTE_TO_DB_ATTR_KEY_MAP[key]
       end
-    end
-
-    def repo_owner_exists?(owner_id)
-      GithubUser.find_by(remote_id: owner_id)
     end
   end
 end

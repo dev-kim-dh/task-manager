@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   include UserAuthentication
 
-  before_action :authenticate_user
-  before_action :set_current_github_user
+  # before_action :authenticate_user
+  # before_action :set_current_github_user
 
   attr_reader :current_user, :current_github_user
 

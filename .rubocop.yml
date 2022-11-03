@@ -1,0 +1,110 @@
+require:
+  - rubocop-rspec
+  - rubocop-rails
+  - rubocop-thread_safety
+  - rubocop-performance
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 2.7.5
+  Exclude:
+    - "tmp/**/*"
+    - "log/**/*"
+    - "vendor/**/*"
+    - "bin/*"
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/SymbolArray:
+  Exclude:
+    - "config/routes.rb"
+
+Style/Documentation:
+  Exclude:
+    - "spec/**/*"
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+Layout/FirstArrayElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/FirstHashElementIndentation:
+  EnforcedStyle: consistent
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented_relative_to_receiver
+
+Naming/PredicateName:
+  Exclude:
+    - 'spec/**/*'
+
+Rails/Present:
+  Enabled: true
+
+Style/AsciiComments:
+  Enabled: false
+
+Style/ExpandPathArguments:
+  Exclude:
+    - 'bin/*'
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Style/StringLiteralsInInterpolation:
+  EnforcedStyle: double_quotes
+
+Style/EmptyMethod:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 150
+  Exclude:
+    - 'spec/*'
+
+RSpec/ContextWording:
+  Enabled: false
+
+RSpec/ImplicitSubject:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/HookArgument:
+  Enabled: false
+
+RSpec/DescribeClass:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'config/environments/*'
+  AllowedMethods:
+    - context
+    - describe
+    - factory
+    - included
+    - namespace
+    - trait
+    - it
+
+Metrics/MethodLength:
+  Enabled: true
+
+Metrics/AbcSize:
+  Enabled: true
+
+Rails/UnknownEnv:
+  Enabled: false
+
+Rails/Output:
+  Enabled: false
+
+Style/AndOr:
+  EnforcedStyle: conditionals
