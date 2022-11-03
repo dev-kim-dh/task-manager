@@ -63,6 +63,10 @@ Rails.application.configure do
   # Suppress logger output for asset requests.
   config.assets.quiet = true
 
+  # https://stackoverflow.com/questions/5760661/rails-favicon-ico-not-found
+  config.serve_static_assets = true
+
+
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true
 
