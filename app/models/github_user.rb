@@ -2,6 +2,7 @@ class GithubUser < ActiveRecord::Base
   belongs_to :user
 
   has_many :github_repositories, foreign_key: :owner_id
+  has_many :github_pull_requests, foreign_key: :owner_id
 
   validates :remote_id, presence: true,
                         uniqueness: true
